@@ -1,0 +1,7 @@
+.popup__edit-auth {
+    padding: 0;
+    margin: 0 auto;
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+}

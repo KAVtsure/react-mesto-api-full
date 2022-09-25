@@ -1,0 +1,21 @@
+.profile__avatar-button {
+    padding: 0;
+    background-image: url("../../../images/Edit_avatar.svg");
+    background-color: rgba(0, 0, 0, 0.8);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 26px 26px;
+    border: none;
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity .2s linear;
+    z-index: 2;
+}
+
+.profile__avatar-button:hover {
+    cursor: pointer;
+    opacity: 1;
+}

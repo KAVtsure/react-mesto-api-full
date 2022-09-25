@@ -1,0 +1,8 @@
+.base {
+  margin: 0 auto;
+  font-family: 'Inter', 'Helvetica Neue', 'Arial', sans-serif;
+  background: #000000;
+  color: #FFFFFF;
+  min-height: 100vh;
+  /* max-width: 1280px; */
+}

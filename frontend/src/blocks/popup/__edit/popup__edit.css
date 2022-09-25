@@ -1,0 +1,12 @@
+.popup__edit {
+    margin: 0 auto;
+    padding: 0;
+    margin-top: 54px;
+    width: 100%;
+}
+
+@media screen and (max-width: 620px) {
+    .popup__edit {
+        margin-top: 75px;
+    }
+}

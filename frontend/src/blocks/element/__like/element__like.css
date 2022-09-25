@@ -1,0 +1,17 @@
+.element__like {
+    padding: 0;
+    padding-left: 20px;
+    background-image: url(../../../images/heart_disable.svg);
+    border: none;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 22px;
+    height: 19px;
+    margin-bottom: 3px;
+}
+
+.element__like:hover {
+    cursor: pointer;
+    opacity: .5;
+}

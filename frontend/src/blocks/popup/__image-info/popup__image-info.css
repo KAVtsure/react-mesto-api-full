@@ -1,0 +1,7 @@
+.popup__image-info {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 32px;
+    align-self: center;
+    object-fit: cover;
+}
