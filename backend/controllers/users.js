@@ -8,6 +8,8 @@ const ServerError = require('../utils/ServerError');
 const NotFoundError = require('../utils/NotFoundError');
 const AuthError = require('../utils/AuthError');
 
+const { NODE_ENV, JWT_SECRET } = process.env;
+
 const createUser = async (req, res, next) => {
   try {
     const {
@@ -135,14 +137,15 @@ const login = async (req, res, next) => {
       next(new AuthError('Неправильные почта или пароль'));
       return;
     }
-    const token = jwt.sign({ _id: user._id }, 'incredibly-secure-key', { expiresIn: '7d' });
+    const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
     res
       .cookie('jwt', token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
         sameSite: true,
+        // secure: 'None',
       })
-      .send({ data: user.toJSON() })
+      .send({ token })
       .end();
   } catch (e) {
     if (e.kind === 'ObjectId') {

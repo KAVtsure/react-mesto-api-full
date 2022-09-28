@@ -32,15 +32,32 @@ function App() {
   const [isInfoTooltip, setIsInfoTooltip] = useState({ isOpen: false, success: false });
   const isOpen = isEditAvatarPopupOpen || isEditProfilePopupOpen || isAddPlacePopupOpen || selectedCard;
 
+  const onLogin = ({ email, password }) => {
+    setEmailAuth(email);
+    authorize({ email, password })
+      .then((data) => {
+        if (data.token) {
+          localStorage.setItem('loggedIn', data.token);
+          setLoggedIn(true);
+          history.push('/');
+        }
+      })
+      .catch((err) => {
+        handleInfoTooltipResult(false)
+        console.log(err)
+      });
+  }
+
   function tokenCheck() {
-    const jwt = localStorage.getItem('jwt');
-    if (!jwt) {
-      return;
-    }
-    checkToken(jwt)
+    // const jwt = localStorage.getItem('loggedIn');
+    // console.log(jwt)
+    // if (!jwt) {
+    //   return;
+    // }
+    checkToken()
       .then((res) => {
-        setEmailAuth(res.data.email);
         setLoggedIn(true);
+        setEmailAuth(res.email);
         history.push('/')
       })
       .catch((err) => {
@@ -50,28 +67,37 @@ function App() {
   }
 
   useEffect(() => {
-    api.getUserInfo()
-      .then((res) => {
-        setCurrentUser(res)
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+    const loggedIn = localStorage.getItem('loggedIn');
+    if (loggedIn) {
+      tokenCheck();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
-    api.getInitialCards()
-      .then((res) => {
-        setCards(res)
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-  }, [])
+    if (loggedIn) {
+      api.getInitialCards()
+        .then((res) => {
+          setLoggedIn(true)
+          setCards(res)
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
+  }, [loggedIn])
 
   useEffect(() => {
-    tokenCheck();
-  }, [])
+    if (loggedIn) {
+      api.getUserInfo()
+        .then((res) => {
+          setCurrentUser(res)
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
+  }, [loggedIn])
 
   useEffect(() => {
     if (loggedIn) {
@@ -93,22 +119,6 @@ function App() {
     }
   }, [isOpen])
 
-  const onLogin = ({ email, password }) => {
-    setEmailAuth(email);
-    authorize({ email, password })
-      .then((data) => {
-        if (data.token) {
-          localStorage.setItem('jwt', data.token);
-          setLoggedIn(true);
-          history.push('/');
-        }
-      })
-      .catch((err) => {
-        handleInfoTooltipResult(false)
-        console.log(err)
-      });
-  }
-
   const onRegister = (data) => {
     register(data)
       .then((data) => {
@@ -123,7 +133,7 @@ function App() {
 
   const onLogout = () => {
     setLoggedIn(false);
-    localStorage.removeItem('jwt');
+    localStorage.removeItem('loggedIn');
     history.push('/sign-in');
     // setEmailAuth('');
   }
@@ -182,10 +192,10 @@ function App() {
 
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(i => i === currentUser._id);
 
     // Отправляем запрос в API и получаем обновлённые данные карточки
-    api.changeLikeCardStatus(card._id, !isLiked)
+    api.changeLikeCardStatus(card._id, isLiked)
       .then((newCard) => {
         setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
       })

@@ -9,6 +9,7 @@ class Api {
 
     getInitialCards() {
         return fetch(this._urlCards, {
+            credentials: "include",
             headers: this._headers,
             method: 'GET'
         })
@@ -17,6 +18,7 @@ class Api {
 
     addCard(cardName, cardLink) {
         return fetch(this._urlCards, {
+            credentials: 'include',
             headers: this._headers,
             method: 'POST',
             body: JSON.stringify({
@@ -29,6 +31,7 @@ class Api {
 
     deleteCard(cardId) {
         return fetch(`${this._urlCards}/${cardId}`, {
+            credentials: 'include',
             headers: this._headers,
             method: 'DELETE',
         })
@@ -37,6 +40,7 @@ class Api {
 
     getUserInfo() {
         return fetch(this._urlUser, {
+            credentials: 'include',
             headers: this._headers,
             method: 'GET',
         })
@@ -45,6 +49,7 @@ class Api {
 
     saveUserInfo({ name, about }) {
         return fetch(this._urlUser, {
+            credentials: 'include',
             headers: this._headers,
             method: 'PATCH',
             body: JSON.stringify({
@@ -57,6 +62,7 @@ class Api {
 
     likeCard(cardId) {
         return fetch(`${this._urlCards}/${cardId}/likes`, {
+            credentials: 'include',
             headers: this._headers,
             method: 'PUT',
         })
@@ -65,6 +71,7 @@ class Api {
 
     unlikeCard(cardId) {
         return fetch(`${this._urlCards}/${cardId}/likes`, {
+            credentials: "include",
             headers: this._headers,
             method: 'DELETE',
         })
@@ -73,14 +80,16 @@ class Api {
 
     changeLikeCardStatus(cardId, isLiked) {
         return fetch(`${this._urlCards}/${cardId}/likes`, {
+            credentials: 'include',
             headers: this._headers,
-            method: `${!isLiked ? 'DELETE' : 'PUT'}`,
+            method: `${isLiked ? 'DELETE' : 'PUT'}`,
         })
             .then(this._checkResponse);
     }
 
     updateAvatar(link) {
         return fetch(`${this._urlUser}/avatar`, {
+            credentials: 'include',
             headers: this._headers,
             method: 'PATCH',
             body: JSON.stringify({
@@ -99,11 +108,11 @@ class Api {
 }
 
 const api = new Api({
-    baseUrl: 'https://api.kavtsure.mesto.nomorepartiesxyz.ru',
+    baseUrl: 'http://localhost:3000',
     headers: {
         // authorization: '875f0935-5842-4013-860b-5457ce9f84f3',
         'Content-Type': 'application/json',
-    }
+    },
 });
 
 export default api;

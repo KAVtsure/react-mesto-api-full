@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
@@ -9,6 +10,7 @@ const { auth } = require('./middlewares/auth');
 const errorHandler = require('./middlewares/error');
 const { loginValidate, createUserValidate } = require('./middlewares/validation');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const cors = require('./middlewares/cors');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -24,11 +26,18 @@ async function main() {
 
 main();
 
+app.use(cors);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use(requestLogger); // подключаем логгер запросов
+
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 
 app.post('/signup', createUserValidate, createUser);
 app.post('/signin', loginValidate, login);

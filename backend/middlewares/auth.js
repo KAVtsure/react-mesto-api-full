@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 const AuthError = require('../utils/AuthError');
 
+const { NODE_ENV, JWT_SECRET } = process.env;
+
 const auth = (req, res, next) => {
   const token = req.cookies.jwt;
   let payload;
@@ -9,7 +11,7 @@ const auth = (req, res, next) => {
       next(new AuthError('Передан неверный JWT'));
       return;
     }
-    payload = jwt.verify(token, 'incredibly-secure-key');
+    payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
   } catch (e) {
     next(new AuthError('Передан неверный JWT'));
     return;
