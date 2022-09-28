@@ -108,7 +108,7 @@ class Api {
 }
 
 const api = new Api({
-    baseUrl: 'http://localhost:3000',
+    baseUrl: 'https://api.kavtsure.mesto.nomorepartiesxyz.ru',
     headers: {
         // authorization: '875f0935-5842-4013-860b-5457ce9f84f3',
         'Content-Type': 'application/json',
