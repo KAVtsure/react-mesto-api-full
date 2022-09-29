@@ -2,10 +2,12 @@
 const allowedCors = [
   'https://praktikum.tk',
   'http://praktikum.tk',
-  'http://localhost:3001',
+  'https://localhost:3000',
   'http://localhost:3000',
   'https://kavtsure.mesto.nomoredomains.sbs',
   'http://kavtsure.mesto.nomoredomains.sbs',
+  'https://api.kavtsure.mesto.nomorepartiesxyz.ru',
+  'http://api.kavtsure.mesto.nomorepartiesxyz.ru',
 ];
 
 const cors = (req, res, next) => {
