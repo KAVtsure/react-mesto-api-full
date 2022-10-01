@@ -1,7 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const { RES_OK } = require('../utils/codes');
 const IncorrectReqDataError = require('../utils/IncorrectReqDataError');
 const EmailExistingError = require('../utils/EmailExistingError');
 const ServerError = require('../utils/ServerError');
@@ -19,7 +18,7 @@ const createUser = async (req, res, next) => {
     const user = await User.create({
       name, about, avatar, email, password: hashedPassword,
     });
-    res.status(RES_OK).send(user);
+    res.send(user);
   } catch (e) {
     if (e.code === 11000) {
       next(new EmailExistingError('Пользователь с таким email уже существует'));
@@ -36,7 +35,7 @@ const createUser = async (req, res, next) => {
 const getUser = async (req, res, next) => {
   try {
     const users = await User.find({});
-    res.status(RES_OK).send(users);
+    res.send(users);
   } catch (e) {
     next(new ServerError('Ошибка по умолчанию'));
   }
@@ -49,7 +48,7 @@ const getCurrentUser = async (req, res, next) => {
       next(new NotFoundError('Пользователь по указанному _id не найден'));
       return;
     }
-    res.status(RES_OK).send(user);
+    res.send(user);
   } catch (e) {
     if (e.kind === 'ObjectId') {
       next(new IncorrectReqDataError('Невалидный ID пользователя'));
@@ -67,7 +66,7 @@ const getUserById = async (req, res, next) => {
       next(new NotFoundError('Пользователь по указанному _id не найден'));
       return;
     }
-    res.status(RES_OK).send(user);
+    res.send(user);
   } catch (e) {
     if (e.kind === 'ObjectId') {
       next(new IncorrectReqDataError('Невалидный ID пользователя'));
@@ -90,7 +89,7 @@ const updateUserProfile = async (req, res, next) => {
       next(new NotFoundError('Пользователь с указанным _id не найден'));
       return;
     }
-    res.status(RES_OK).send(user);
+    res.send(user);
   } catch (e) {
     if (e.name === 'ValidationError') {
       next(new IncorrectReqDataError('Переданы некорректные данные при обновлении профиля'));
@@ -113,7 +112,7 @@ const updateAvatar = async (req, res, next) => {
       next(new NotFoundError('Пользователь с указанным _id не найден'));
       return;
     }
-    res.status(RES_OK).send(user);
+    res.send(user);
   } catch (e) {
     if (e.name === 'ValidationError') {
       next(new IncorrectReqDataError('Переданы некорректные данные при обновлении аватара'));

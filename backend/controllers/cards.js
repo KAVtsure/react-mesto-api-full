@@ -3,14 +3,13 @@ const IncorrectReqDataError = require('../utils/IncorrectReqDataError');
 const ServerError = require('../utils/ServerError');
 const NotFoundError = require('../utils/NotFoundError');
 const CardDeleteError = require('../utils/CardDeleteError');
-const { RES_OK } = require('../utils/codes');
 
 const createCard = async (req, res, next) => {
   const { name, link } = req.body;
   const owner = req.user._id;
   try {
     const card = await Card.create({ name, link, owner });
-    res.status(RES_OK).send(card);
+    res.send(card);
   } catch (e) {
     if (e.name === 'ValidationError') {
       next(new IncorrectReqDataError('Переданы некорректные данные при создании карточки'));
@@ -23,7 +22,7 @@ const createCard = async (req, res, next) => {
 const getCard = async (req, res, next) => {
   try {
     const cards = await Card.find({});
-    res.status(RES_OK).send(cards);
+    res.send(cards);
   } catch (e) {
     next(new ServerError('Ошибка по умолчанию'));
   }
@@ -42,7 +41,7 @@ const deleteCard = async (req, res, next) => {
       return;
     }
     await Card.deleteOne(card);
-    res.status(RES_OK).send({ message: 'Карточка успешно удалена' });
+    res.send({ message: 'Карточка успешно удалена' });
   } catch (e) {
     if (e.name === 'CastError') {
       next(new IncorrectReqDataError('Невалидный ID карточки'));
@@ -63,7 +62,7 @@ const likeCard = async (req, res, next) => {
       next(new NotFoundError('Передан несуществующий _id карточки'));
       return;
     }
-    res.status(RES_OK).send(card);
+    res.send(card);
   } catch (e) {
     if (e.name === 'CastError') {
       next(new IncorrectReqDataError('Переданы некорректные данные для постановки/снятии лайка'));
@@ -84,7 +83,7 @@ const dislikeCard = async (req, res, next) => {
       next(new NotFoundError('Передан несуществующий _id карточки'));
       return;
     }
-    res.status(RES_OK).send(card);
+    res.send(card);
   } catch (e) {
     if (e.name === 'CastError') {
       next(new IncorrectReqDataError('Переданы некорректные данные для постановки/снятии лайка'));
