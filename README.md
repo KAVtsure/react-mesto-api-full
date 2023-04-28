@@ -16,23 +16,23 @@
 
 ### Инструменты и технологии
 **Frontend:<br />**
-HTML5<br />
-CCS3<br />
-JavaScript (ES6)<br />
-React (Create React App, разметка в JSX, функциональные компоненты и хуки),<br />
-сайт адаптирован под разные расширения экранов,<br />
-flexbox,<br />
-grid,<br />
-БЭМ (наименование классов и организация файловой структуры стилей),<br />
-Webpack.<br />
+* HTML5<br />
+* CCS3<br />
+* JavaScript (ES6)<br />
+* React (Create React App, разметка в JSX, функциональные компоненты и хуки),<br />
+* сайт адаптирован под разные расширения экранов,<br />
+* flexbox,<br />
+* grid,<br />
+* БЭМ (наименование классов и организация файловой структуры стилей),<br />
+* Webpack.<br />
 
 **Backend:<br />**
-Node.js,<br />
-mongoDB,<br />
-express.js,<br />
-mongoose,<br />
-celebrate,<br />
-winston - логирование запросов и ошибок.<br />
+* Node.js,<br />
+* mongoDB,<br />
+* express.js,<br />
+* mongoose,<br />
+* celebrate,<br />
+* winston - логирование запросов и ошибок.<br />
 
 **Удаленный сервер:**<br />
 облачный сервер на Яндекс.Облако,<br />
@@ -41,4 +41,6 @@ SSL сертификат.<br />
 
 ### Запуск:
 Ссылка на фронтенд: https://kavtsure.mesto.nomoredomains.sbs,<br />
-Адрес для запросов на бэкенд: https://api.kavtsure.mesto.nomorepartiesxyz.ru
+Адрес для запросов на бэкенд: https://api.kavtsure.mesto.nomorepartiesxyz.ru<br />
+
+[Ссылка на макет Figma](https://www.figma.com/file/StZjf8HnoeLdiXS7dYrLAh/JavaScript.-Sprint-4)
